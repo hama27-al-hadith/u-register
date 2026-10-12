@@ -9,10 +9,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+      
       :root {
-        --accent: #114B32;
-        --off-white: #fcfcfc;
-        --main-color: #d4a72c;
+        --accent: #C96750;       
+        --off-white: #FCF7F0;   
+        --main-color: #B77A42; 
+        --soft-coral: #F5D2B8; 
+        --dark-text: #593526;    
       }
 
       * {
@@ -37,7 +40,7 @@
       #loader {
         position: fixed;
         inset: 0;
-        background: rgba(252, 252, 252, 0.9);
+        background: rgba(252, 247, 240, 0.94);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -101,12 +104,14 @@
       }
 
       .error-card {
-        background: white;
+        background: #FFFFFF;
         padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        border: 1px solid var(--accent);
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(89, 53, 38, 0.10);
+        border: 1px solid var(--soft-coral);
         border-bottom: 4px solid var(--accent);
+        max-width: 420px;
+        margin: 20px;
       }
     </style>
   </head>
