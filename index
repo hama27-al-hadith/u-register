@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>اختبار الحديث الشريف - حماة</title>
+    <link rel="icon" type="image/png" href="h-logo.png">
+    <link rel="icon" type="image/svg+xml" href="s-logo.svg" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      :root {
+        --accent: #114B32;
+        --off-white: #fcfcfc;
+        --main-color: #d4a72c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        height: 100dvh; 
+        min-height: -webkit-fill-available; 
+        background-color: var(--off-white);
+        /* font-family: 'Segoe UI', sans-serif; */
+        overflow: hidden;
+      }
+
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: rgba(252, 252, 252, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+      }
+
+      .spinner {
+        width: 60px;
+        height: 60px;
+        display: grid;
+        border: 4px solid #0000;
+        border-radius: 50%;
+        border-right-color: var(--accent);
+        animation: spin 1s infinite linear;
+      }
+
+      .spinner::before,
+      .spinner::after {
+        content: '';
+        grid-area: 1/1;
+        margin: 2px;
+        border: inherit;
+        border-radius: 50%;
+        animation: spin 2s infinite;
+      }
+
+      .spinner::after {
+        margin: 8px;
+        animation-duration: 3s;
+      }
+
+      @keyframes spin {
+        100% {
+          transform: rotate(1turn);
+        }
+      }
+
+      .loading-text {
+        margin-top: 20px;
+        color: var(--main-color);
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      #mainIframe {
+        border: none;
+        width: 100%;
+        height: 100dvh;
+        display: none;
+      }
+
+      #errorContainer {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100dvh;
+        text-align: center;
+      }
+
+      .error-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--accent);
+        border-bottom: 4px solid var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="spinner"></div>
+      <!-- <div class="loading-text">جاري التحميل...</div> -->
+    </div>
+
+    <iframe id="mainIframe" src="" allow="fullscreen; clipboard-read; clipboard-write; web-share" allowfullscreen="true"></iframe>
+
+    <div id="errorContainer">
+      <div class="error-card">
+        <i
+          class="fa-solid fa-circle-exclamation"
+          style="font-size: 3rem; color: var(--accent); margin-bottom: 15px"
+        ></i>
+        <h2 style="color: var(--main-color)">رابط غير صحيح</h2>
+        <p style="line-height: 30px">
+          عذراً، يبدو أن الرابط المستخدم غير صحيح. يرجى التأكد من الدخول عبر الروابط الرسمية
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const GAS_DEPLOY_URL =
+        'https://script.google.com/macros/s/AKfycbxRWf7FFtzFrSC1favR3hv4PUwBZsuO_J9NylRZBD5QSnt5iCaCZUj2K9vhVQey/exec';
+
+      window.onload = function () {
+        // const fullUrl = window.location.href.toLowerCase();
+        const fullUrl = window.location.href;
+        const iframe = document.getElementById('mainIframe');
+        const loader = document.getElementById('loader');
+        const errorContainer = document.getElementById('errorContainer');
+
+        let param = '';
+        
+        if(fullUrl.includes('#') || fullUrl.includes('?nawawi')){
+          param = 'page=nawawi-u-registration';
+        } else if(fullUrl.includes('?page')) {
+          param = fullUrl.split('?')[1];
+        }
+
+        if(param){
+          iframe.src = GAS_DEPLOY_URL + '?' + param;
+          iframe.onload = function () {
+            loader.style.transition = 'opacity 0.6s ease';
+            loader.style.opacity = '0';
+            setTimeout(() => {
+              loader.style.display = 'none';
+              iframe.style.display = 'block';
+            }, 60);
+          };
+        } else {
+          loader.style.display = 'none';
+          errorContainer.style.display = 'flex';
+        }
+       
+      };
+    </script>
+  </body>
+</html>
